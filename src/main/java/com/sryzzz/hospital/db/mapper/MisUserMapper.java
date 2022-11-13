@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sryzzz.hospital.db.entity.MisUser;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * MisUserMapper
@@ -21,6 +22,14 @@ public interface MisUserMapper extends BaseMapper<MisUser> {
      * @return 用户权限列表
      */
     ArrayList<String> searchUserPermissions(int userId);
+
+    /**
+     * 登录
+     *
+     * @param param 登录参数
+     * @return 用户id
+     */
+    Integer login(Map<String, Object> param);
 }
 
 

@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @EnableAsync
 @ServletComponentScan
-@MapperScan("com.example.hospital.api.db.dao")
+@MapperScan("com.sryzzz.hospital.db.mapper")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class HospitalAdminApiApplication {
 

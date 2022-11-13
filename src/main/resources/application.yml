@@ -1,8 +1,12 @@
 server:
+  # Jetty默认是非阻塞的，可以处理更多并发请求
   jetty:
     threads:
+      # acceptors线程池接受HTTP请求
       acceptors: 4
+      # selectors线程池负责处理HTTP消息协议数据包
       selectors: 8
+      # worker线程池负责调用Web方法
       min: 8
       max: 200
   port: 8092
@@ -27,7 +31,9 @@ spring:
   servlet:
     multipart:
       enabled: true
+      # 上传文件不能超过20M
       max-file-size: 20MB
+      # HTTP 请求不能超过20M
       max-request-size: 20MB
 
   redis:
@@ -77,13 +83,22 @@ logging:
     console: "%d{yyyy/MM/dd HH:mm:ss}  %-5level  %msg%n"
 
 sa-token:
+  # HTTP 请求头中 token 的名称
   token-name: token
+  # token有效期，单位s 默认30天, -1代表永不过期
   timeout: 2592000
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
   activity-timeout: -1
-  allow-concurrent-login: true
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
   is-share: false
+  # token风格
   token-style: uuid
+  # 读取 Cookie 中 Token
   isReadCookie: false
+  # 是否输出操作日志
+  is-log: false
 
 minio:
   endpoint: http://192.168.31.221:9000

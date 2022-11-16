@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sryzzz.hospital.db.mapper.DoctorMapper">
+    <!-- 分页查询医生列表 -->
     <select id="searchByPage" parameterType="Map" resultType="HashMap">
         SELECT d."id" AS "id",
         d."name" AS "name",
@@ -66,5 +67,22 @@
         </if>
         AND d."status" = ${status}
     </select>
+
+    <!-- 查询医生详细信息 -->
+    <select id="searchContent" parameterType="int" resultType="HashMap">
+        SELECT "photo",
+               "pid",
+               "birthday",
+               "uuid",
+               "hiredate",
+               "email",
+               "remark",
+               "tag",
+               "address",
+               "description"
+        FROM HOSPITAL.DOCTOR
+        WHERE "id" = #{id}
+    </select>
+
 
 </mapper>

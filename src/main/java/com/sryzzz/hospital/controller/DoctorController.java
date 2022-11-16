@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
 import com.sryzzz.hospital.controller.form.SearchDoctorByPageForm;
+import com.sryzzz.hospital.controller.form.SearchDoctorContentForm;
 import com.sryzzz.hospital.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,5 +45,16 @@ public class DoctorController {
         param.put("start", start);
         PageUtils pageUtils = doctorService.searchByPage(param);
         return ResponseResult.ok().put("result", pageUtils);
+    }
+
+    /**
+     * 查询医生详细信息
+     */
+    @PostMapping("/searchContent")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "DOCTOR:SELECT"}, mode = SaMode.OR)
+    public ResponseResult searchContent(@RequestBody @Valid SearchDoctorContentForm form) {
+        HashMap<String, Object> map = doctorService.searchContent(form.getId());
+        return ResponseResult.ok(map);
     }
 }

@@ -31,6 +31,14 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
      * @return 记录总数
      */
     long searchCount(Map<String, Object> param);
+
+    /**
+     * 查询医生详细信息
+     *
+     * @param id 医生id
+     * @return 医生详细信息
+     */
+    HashMap<String, Object> searchContent(int id);
 }
 
 

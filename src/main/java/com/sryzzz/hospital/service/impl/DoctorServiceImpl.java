@@ -1,6 +1,8 @@
 package com.sryzzz.hospital.service.impl;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.Doctor;
@@ -36,7 +38,14 @@ public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor>
         }
         int page = MapUtil.getInt(param, "page");
         int length = MapUtil.getInt(param, "length");
-        PageUtils pageUtils = new PageUtils(list, count, page, length);
-        return pageUtils;
+        return new PageUtils(list, count, page, length);
+    }
+
+    @Override
+    public HashMap<String, Object> searchContent(int id) {
+        HashMap<String, Object> map = baseMapper.searchContent(id);
+        JSONArray tag = JSONUtil.parseArray(MapUtil.getStr(map, "tag"));
+        map.replace("tag", tag);
+        return map;
     }
 }

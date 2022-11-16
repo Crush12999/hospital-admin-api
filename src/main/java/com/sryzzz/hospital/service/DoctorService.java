@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.Doctor;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,4 +23,12 @@ public interface DoctorService extends IService<Doctor> {
      * @return 医生分页信息
      */
     PageUtils searchByPage(Map<String, Object> param);
+
+    /**
+     * 查询医生详细信息
+     *
+     * @param id 医生id
+     * @return 医生详细信息
+     */
+    HashMap<String, Object> searchContent(int id);
 }

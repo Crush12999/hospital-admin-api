@@ -39,6 +39,13 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
      * @return 医生详细信息
      */
     HashMap<String, Object> searchContent(int id);
+
+    /**
+     * 更新医生照片
+     *
+     * @param param 相关参数
+     */
+    void updatePhoto(Map<String, Object> param);
 }
 
 

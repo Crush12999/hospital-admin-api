@@ -7,9 +7,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.Doctor;
 import com.sryzzz.hospital.db.mapper.DoctorMapper;
+import com.sryzzz.hospital.exception.HospitalException;
 import com.sryzzz.hospital.service.DoctorService;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +32,15 @@ import java.util.Map;
 @Service
 public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor>
         implements DoctorService {
+
+    @Value("${minio.endpoint}")
+    private String endpoint;
+
+    @Value("${minio.access-key}")
+    private String accessKey;
+
+    @Value("${minio.secret-key}")
+    private String secretKey;
 
     @Override
     public PageUtils searchByPage(Map<String, Object> param) {
@@ -47,5 +62,30 @@ public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor>
         JSONArray tag = JSONUtil.parseArray(MapUtil.getStr(map, "tag"));
         map.replace("tag", tag);
         return map;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updatePhoto(MultipartFile file, Integer doctorId) {
+        try {
+            String filename = "doctor-" + doctorId + ".jpg";
+            //在Minio中保存医生照片
+            MinioClient client = new MinioClient.Builder().endpoint(endpoint)
+                    .credentials(accessKey, secretKey).build();
+
+            client.putObject(PutObjectArgs.builder().bucket("hospital")
+                    .object("doctor/" + filename)
+                    .stream(file.getInputStream(), -1, 5 * 1024 * 1024)
+                    .contentType("image/jpeg").build());
+
+            //更新医生表photo字段
+            baseMapper.updatePhoto(new HashMap<String, Object>(16) {{
+                put("id", doctorId);
+                put("photo", "/doctor/" + filename);
+            }});
+        } catch (Exception e) {
+            log.error("保存医生照片失败", e);
+            throw new HospitalException("保存医生照片失败");
+        }
     }
 }

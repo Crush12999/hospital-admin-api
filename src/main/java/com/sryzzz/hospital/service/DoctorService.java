@@ -3,6 +3,7 @@ package com.sryzzz.hospital.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.Doctor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,4 +32,12 @@ public interface DoctorService extends IService<Doctor> {
      * @return 医生详细信息
      */
     HashMap<String, Object> searchContent(int id);
+
+    /**
+     * 更新医生照片
+     *
+     * @param file     照片
+     * @param doctorId 医生id
+     */
+    void updatePhoto(MultipartFile file, Integer doctorId);
 }

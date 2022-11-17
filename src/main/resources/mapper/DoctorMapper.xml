@@ -84,5 +84,12 @@
         WHERE "id" = #{id}
     </select>
 
+    <!-- 上传医生照片 -->
+    <update id="updatePhoto" parameterType="Map">
+        UPSERT
+        INTO HOSPITAL.DOCTOR("id", "photo")
+        VALUES(${id}, #{photo})
+    </update>
+
 
 </mapper>

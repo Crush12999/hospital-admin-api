@@ -4,8 +4,11 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.json.JSONUtil;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
+import com.sryzzz.hospital.controller.form.InsertDoctorForm;
 import com.sryzzz.hospital.controller.form.SearchDoctorByPageForm;
 import com.sryzzz.hospital.controller.form.SearchDoctorContentForm;
 import com.sryzzz.hospital.service.DoctorService;
@@ -70,6 +73,21 @@ public class DoctorController {
     @SaCheckPermission(value = {"ROOT", "DOCTOR:UPDATE"}, mode = SaMode.OR)
     public ResponseResult updatePhoto(@Param("file") MultipartFile file, @Param("doctorId") Integer doctorId) {
         doctorService.updatePhoto(file, doctorId);
+        return ResponseResult.ok();
+    }
+
+    /**
+     * 添加医生
+     */
+    @PostMapping("/insert")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "DOCTOR:INSERT"}, mode = SaMode.OR)
+    public ResponseResult insertDoctor(@RequestBody @Valid InsertDoctorForm form) {
+        Map<String, Object> param = BeanUtil.beanToMap(form);
+        String json = JSONUtil.parseArray(form.getTag()).toString();
+        param.replace("tag", json);
+        param.put("uuid", IdUtil.simpleUUID().toUpperCase());
+        doctorService.insertDoctor(param);
         return ResponseResult.ok();
     }
 }

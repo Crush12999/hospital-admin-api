@@ -3,5 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sryzzz.hospital.db.mapper.MedicalDeptSubAndDoctorMapper">
-    
+
+    <insert id="insertMedicalDeptSubAndDoctor" parameterType="com.sryzzz.hospital.db.entity.MedicalDeptSubAndDoctor">
+        UPSERT
+        INTO HOSPITAL.MEDICAL_DEPT_SUB_AND_DOCTOR("id", "dept_sub_id", "doctor_id")
+        VALUES (
+            NEXT VALUE FOR HOSPITAL.MEDICAL_DEPT_SUB_AND_DOCTOR_SEQUENCE,
+            ${deptSubId},
+            ${doctorId}
+        )
+    </insert>
+
 </mapper>

@@ -40,4 +40,11 @@ public interface DoctorService extends IService<Doctor> {
      * @param doctorId 医生id
      */
     void updatePhoto(MultipartFile file, Integer doctorId);
+
+    /**
+     * 添加医生信息
+     *
+     * @param param 医生信息
+     */
+    void insertDoctor(Map<String, Object> param);
 }

@@ -2,6 +2,7 @@ package com.sryzzz.hospital.db.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sryzzz.hospital.db.entity.Doctor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,22 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
      * @param param 相关参数
      */
     void updatePhoto(Map<String, Object> param);
+
+    /**
+     * 添加医生
+     *
+     * @param entity 医生实体
+     */
+    @Transactional(rollbackFor = Exception.class)
+    void insertDoctor(Doctor entity);
+
+    /**
+     * 通过uuid搜索医生id
+     *
+     * @param uuid uuid
+     * @return 医生id
+     */
+    Integer searchIdByUuid(String uuid);
 }
 
 

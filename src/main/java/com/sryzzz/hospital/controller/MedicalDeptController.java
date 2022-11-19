@@ -31,4 +31,14 @@ public class MedicalDeptController {
         ArrayList<HashMap<String, Object>> list = medicalDeptService.searchAll();
         return ResponseResult.ok().put("result", list);
     }
+
+    /**
+     * 查询科室 & 诊室列表
+     */
+    @GetMapping("/searchDeptAndSub")
+    @SaCheckLogin
+    public ResponseResult searchDeptAndSub() {
+        HashMap<String, Object> map = medicalDeptService.searchDeptAndSub();
+        return ResponseResult.ok().put("result", map);
+    }
 }

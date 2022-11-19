@@ -21,4 +21,11 @@ public interface MedicalDeptService extends IService<MedicalDept> {
      * @return 所有科室信息
      */
     ArrayList<HashMap<String, Object>> searchAll();
+
+    /**
+     * 查询科室 & 诊室列表
+     *
+     * @return 科室 & 诊室列表
+     */
+    HashMap<String, Object> searchDeptAndSub();
 }

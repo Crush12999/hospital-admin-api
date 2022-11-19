@@ -22,6 +22,13 @@ public interface MedicalDeptMapper extends BaseMapper<MedicalDept> {
      */
     ArrayList<HashMap<String, Object>> searchAll();
 
+    /**
+     * 查询科室 & 诊室列表
+     *
+     * @return 科室 & 诊室列表
+     */
+    ArrayList<HashMap<String, Object>> searchDeptAndSub();
+
 }
 
 

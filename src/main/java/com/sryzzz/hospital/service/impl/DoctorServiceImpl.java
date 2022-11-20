@@ -111,4 +111,22 @@ public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor>
         entity2.setDoctorId(doctorId);
         medicalDeptSubAndDoctorMapper.insert(entity2);
     }
+
+    @Override
+    public HashMap<String, Object> searchById(int id) {
+        HashMap<String, Object> map = baseMapper.searchById(id);
+        String tag = MapUtil.getStr(map, "tag");
+        JSONArray array = JSONUtil.parseArray(tag);
+        map.replace("tag", array);
+        return map;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateDoctor(Map<String, Object> param) {
+        baseMapper.updateDoctor(param);
+        // param = MapUtil.renameKey(param, "id", "doctorId");
+        MapUtil.renameKey(param, "id", "doctorId");
+        medicalDeptSubAndDoctorMapper.updateDoctorSubDept(param);
+    }
 }

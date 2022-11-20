@@ -63,6 +63,21 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
      * @return 医生id
      */
     Integer searchIdByUuid(String uuid);
+
+    /**
+     * 查询医生信息
+     *
+     * @param id 医生id
+     * @return 医生信息
+     */
+    HashMap<String, Object> searchById(int id);
+
+    /**
+     * 更新医生信息
+     *
+     * @param param 医生信息
+     */
+    void updateDoctor(Map<String, Object> param);
 }
 
 

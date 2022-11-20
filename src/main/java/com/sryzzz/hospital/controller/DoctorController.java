@@ -8,9 +8,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
-import com.sryzzz.hospital.controller.form.InsertDoctorForm;
-import com.sryzzz.hospital.controller.form.SearchDoctorByPageForm;
-import com.sryzzz.hospital.controller.form.SearchDoctorContentForm;
+import com.sryzzz.hospital.controller.form.*;
 import com.sryzzz.hospital.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -88,6 +86,25 @@ public class DoctorController {
         param.replace("tag", json);
         param.put("uuid", IdUtil.simpleUUID().toUpperCase());
         doctorService.insertDoctor(param);
+        return ResponseResult.ok();
+    }
+
+    @PostMapping("/searchById")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "DOCTOR:SELECT"}, mode = SaMode.OR)
+    public ResponseResult searchById(@RequestBody @Valid SearchDoctorByIdForm form) {
+        HashMap<String, Object> map = doctorService.searchById(form.getId());
+        return ResponseResult.ok(map);
+    }
+
+    @PostMapping("/update")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "DOCTOR:UPDATE"}, mode = SaMode.OR)
+    public ResponseResult update(@RequestBody @Valid UpdateDoctorForm form) {
+        Map<String, Object> param = BeanUtil.beanToMap(form);
+        String json = JSONUtil.parseArray(form.getTag()).toString();
+        param.replace("tag", json);
+        doctorService.updateDoctor(param);
         return ResponseResult.ok();
     }
 }

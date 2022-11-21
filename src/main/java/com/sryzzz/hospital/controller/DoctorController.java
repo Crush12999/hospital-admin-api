@@ -107,4 +107,12 @@ public class DoctorController {
         doctorService.updateDoctor(param);
         return ResponseResult.ok();
     }
+
+    @PostMapping("/deleteByIds")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "DOCTOR:DELETE"}, mode = SaMode.OR)
+    public ResponseResult deleteByIds(@RequestBody @Valid DeleteDoctorByIdsForm form) {
+        doctorService.deleteByIds(form.getIds());
+        return ResponseResult.ok();
+    }
 }

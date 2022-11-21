@@ -129,4 +129,10 @@ public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor>
         MapUtil.renameKey(param, "id", "doctorId");
         medicalDeptSubAndDoctorMapper.updateDoctorSubDept(param);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteByIds(Integer[] ids) {
+        baseMapper.deleteByIds(ids);
+    }
 }

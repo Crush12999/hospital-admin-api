@@ -154,5 +154,15 @@
         )
     </update>
 
+    <!-- 删除医生（逻辑删除） -->
+    <update id="deleteByIds">
+        UPSERT INTO HOSPITAL.DOCTOR("id", "status")
+        SELECT "id", 4
+        FROM HOSPITAL.DOCTOR
+        WHERE "id" IN
+        <foreach collection="array" open="(" item="one" separator="," close=")">
+            ${one}
+        </foreach>
+    </update>
 
 </mapper>

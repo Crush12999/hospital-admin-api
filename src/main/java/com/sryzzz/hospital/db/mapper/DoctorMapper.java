@@ -78,6 +78,13 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
      * @param param 医生信息
      */
     void updateDoctor(Map<String, Object> param);
+
+    /**
+     * 逻辑删除医生信息
+     *
+     * @param ids 待删除医生id列表
+     */
+    void deleteByIds(Integer[] ids);
 }
 
 

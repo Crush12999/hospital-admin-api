@@ -1,10 +1,12 @@
 package com.sryzzz.hospital.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.MedicalDept;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 科室Service层
@@ -28,4 +30,12 @@ public interface MedicalDeptService extends IService<MedicalDept> {
      * @return 科室 & 诊室列表
      */
     HashMap<String, Object> searchDeptAndSub();
+
+    /**
+     * 分页查询科室记录
+     *
+     * @param param 查询条件
+     * @return 科室记录
+     */
+    PageUtils searchByPage(Map<String, Object> param);
 }

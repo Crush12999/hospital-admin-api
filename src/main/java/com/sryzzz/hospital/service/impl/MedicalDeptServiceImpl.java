@@ -2,6 +2,7 @@ package com.sryzzz.hospital.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.MedicalDept;
 import com.sryzzz.hospital.db.mapper.MedicalDeptMapper;
 import com.sryzzz.hospital.service.MedicalDeptService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 科室Service层实现
@@ -52,5 +54,19 @@ public class MedicalDeptServiceImpl extends ServiceImpl<MedicalDeptMapper, Medic
             }
         }
         return map;
+    }
+
+    @Override
+    public PageUtils searchByPage(Map<String, Object> param) {
+        ArrayList<HashMap<String, Object>> list = null;
+        long count = baseMapper.searchCount(param);
+        if (count > 0) {
+            list = baseMapper.searchByPage(param);
+        } else {
+            list = new ArrayList<>();
+        }
+        int page = MapUtil.getInt(param, "page");
+        int length = MapUtil.getInt(param, "length");
+        return new PageUtils(list, count, page, length);
     }
 }

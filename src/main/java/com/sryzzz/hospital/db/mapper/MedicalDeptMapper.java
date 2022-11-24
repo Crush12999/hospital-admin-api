@@ -5,6 +5,7 @@ import com.sryzzz.hospital.db.entity.MedicalDept;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * MedicalDeptMapper
@@ -28,6 +29,22 @@ public interface MedicalDeptMapper extends BaseMapper<MedicalDept> {
      * @return 科室 & 诊室列表
      */
     ArrayList<HashMap<String, Object>> searchDeptAndSub();
+
+    /**
+     * 分页查询科室记录
+     *
+     * @param param 查询条件
+     * @return 科室记录
+     */
+    ArrayList<HashMap<String, Object>> searchByPage(Map<String, Object> param);
+
+    /**
+     * 查询总记录数
+     *
+     * @param param 查询条件
+     * @return 总记录数
+     */
+    long searchCount(Map<String, Object> param);
 
 }
 

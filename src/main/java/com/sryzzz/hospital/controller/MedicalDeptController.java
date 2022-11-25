@@ -6,7 +6,9 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.hutool.core.bean.BeanUtil;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
+import com.sryzzz.hospital.controller.form.InsertMedicalDeptForm;
 import com.sryzzz.hospital.controller.form.SearchMedicalDeptByPageForm;
+import com.sryzzz.hospital.db.entity.MedicalDept;
 import com.sryzzz.hospital.service.MedicalDeptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +60,17 @@ public class MedicalDeptController {
         param.put("start", start);
         PageUtils pageUtils = medicalDeptService.searchByPage(param);
         return ResponseResult.ok().put("result", pageUtils);
+    }
+
+    /**
+     * 添加科室记录
+     */
+    @PostMapping("/insert")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "MEDICAL_DEPT:INSERT"}, mode = SaMode.OR)
+    public ResponseResult insert(@RequestBody @Valid InsertMedicalDeptForm form) {
+        MedicalDept entity = BeanUtil.toBean(form, MedicalDept.class);
+        medicalDeptService.insertMedicalDept(entity);
+        return ResponseResult.ok();
     }
 }

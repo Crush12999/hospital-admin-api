@@ -73,4 +73,11 @@
         </if>
     </select>
 
+    <!-- 添加科室记录 -->
+    <insert id="insertMedicalDept" parameterType="com.sryzzz.hospital.db.entity.MedicalDept">
+        UPSERT INTO HOSPITAL.MEDICAL_DEPT("id","name","outpatient","recommended","description")
+    VALUES(NEXT VALUE FOR HOSPITAL.MEDICAL_DEPT_SEQUENCE, #{name}, ${outpatient}, ${recommended}, #{description})
+    </insert>
+
+
 </mapper>

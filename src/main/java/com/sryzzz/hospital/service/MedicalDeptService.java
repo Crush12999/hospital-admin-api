@@ -38,4 +38,11 @@ public interface MedicalDeptService extends IService<MedicalDept> {
      * @return 科室记录
      */
     PageUtils searchByPage(Map<String, Object> param);
+
+    /**
+     * 添加科室记录
+     *
+     * @param entity 科室记录
+     */
+    void insertMedicalDept(MedicalDept entity);
 }

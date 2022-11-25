@@ -7,6 +7,7 @@ import com.sryzzz.hospital.db.entity.MedicalDept;
 import com.sryzzz.hospital.db.mapper.MedicalDeptMapper;
 import com.sryzzz.hospital.service.MedicalDeptService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,5 +69,11 @@ public class MedicalDeptServiceImpl extends ServiceImpl<MedicalDeptMapper, Medic
         int page = MapUtil.getInt(param, "page");
         int length = MapUtil.getInt(param, "length");
         return new PageUtils(list, count, page, length);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void insertMedicalDept(MedicalDept entity) {
+        baseMapper.insertMedicalDept(entity);
     }
 }

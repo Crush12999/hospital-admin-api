@@ -53,6 +53,20 @@ public interface MedicalDeptMapper extends BaseMapper<MedicalDept> {
      */
     void insertMedicalDept(MedicalDept entity);
 
+    /**
+     * 通过id查询科室信息
+     *
+     * @param id 科室id
+     * @return 科室信息
+     */
+    HashMap<String, Object> searchById(int id);
+
+    /**
+     * 更新科室信息
+     *
+     * @param entity 科室信息
+     */
+    void updateMedicalDept(MedicalDept entity);
 }
 
 

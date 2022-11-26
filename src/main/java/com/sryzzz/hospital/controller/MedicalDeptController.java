@@ -7,7 +7,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
 import com.sryzzz.hospital.controller.form.InsertMedicalDeptForm;
+import com.sryzzz.hospital.controller.form.SearchMedicalDeptByIdForm;
 import com.sryzzz.hospital.controller.form.SearchMedicalDeptByPageForm;
+import com.sryzzz.hospital.controller.form.UpdateMedicalDeptForm;
 import com.sryzzz.hospital.db.entity.MedicalDept;
 import com.sryzzz.hospital.service.MedicalDeptService;
 import lombok.RequiredArgsConstructor;
@@ -71,6 +73,23 @@ public class MedicalDeptController {
     public ResponseResult insert(@RequestBody @Valid InsertMedicalDeptForm form) {
         MedicalDept entity = BeanUtil.toBean(form, MedicalDept.class);
         medicalDeptService.insertMedicalDept(entity);
+        return ResponseResult.ok();
+    }
+
+    @PostMapping("/searchById")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "MEDICAL_DEPT:SELECT"}, mode = SaMode.OR)
+    public ResponseResult searchById(@RequestBody @Valid SearchMedicalDeptByIdForm form) {
+        HashMap<String, Object> map = medicalDeptService.searchById(form.getId());
+        return ResponseResult.ok(map);
+    }
+
+    @PostMapping("/update")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "MEDICAL_DEPT:UPDATE"}, mode = SaMode.OR)
+    public ResponseResult update(@RequestBody @Valid UpdateMedicalDeptForm form) {
+        MedicalDept entity = BeanUtil.toBean(form, MedicalDept.class);
+        medicalDeptService.updateMedicalDept(entity);
         return ResponseResult.ok();
     }
 }

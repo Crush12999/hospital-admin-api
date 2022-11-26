@@ -76,4 +76,15 @@ public class MedicalDeptServiceImpl extends ServiceImpl<MedicalDeptMapper, Medic
     public void insertMedicalDept(MedicalDept entity) {
         baseMapper.insertMedicalDept(entity);
     }
+
+    @Override
+    public HashMap<String, Object> searchById(int id) {
+        return baseMapper.searchById(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateMedicalDept(MedicalDept entity) {
+        baseMapper.updateMedicalDept(entity);
+    }
 }

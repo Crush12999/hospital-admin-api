@@ -79,5 +79,21 @@
     VALUES(NEXT VALUE FOR HOSPITAL.MEDICAL_DEPT_SEQUENCE, #{name}, ${outpatient}, ${recommended}, #{description})
     </insert>
 
+    <!-- 通过id查询科室信息 -->
+    <select id="searchById" parameterType="int" resultType="HashMap">
+        SELECT "name",
+               "outpatient",
+               "recommended",
+               "description"
+        FROM HOSPITAL.MEDICAL_DEPT
+        WHERE "id" = ${id}
+    </select>
+
+    <!-- 更新科室信息 -->
+    <update id="updateMedicalDept" parameterType="com.sryzzz.hospital.db.entity.MedicalDept">
+        UPSERT INTO HOSPITAL.MEDICAL_DEPT("id","name","outpatient","recommended","description")
+    VALUES(${id}, #{name}, ${outpatient}, ${recommended}, #{description})
+    </update>
+
 
 </mapper>

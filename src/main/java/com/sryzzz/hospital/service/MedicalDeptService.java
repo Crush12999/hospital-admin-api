@@ -60,4 +60,11 @@ public interface MedicalDeptService extends IService<MedicalDept> {
      * @param entity 科室信息
      */
     void updateMedicalDept(MedicalDept entity);
+
+    /**
+     * 删除科室信息
+     *
+     * @param ids 科室ids
+     */
+    void deleteByIds(Integer[] ids);
 }

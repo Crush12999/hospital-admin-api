@@ -67,6 +67,21 @@ public interface MedicalDeptMapper extends BaseMapper<MedicalDept> {
      * @param entity 科室信息
      */
     void updateMedicalDept(MedicalDept entity);
+
+    /**
+     * 查询隶属诊室
+     *
+     * @param ids 科室ids
+     * @return 隶属诊室总数
+     */
+    long searchSubCount(Integer[] ids);
+
+    /**
+     * 删除科室信息
+     *
+     * @param ids 科室ids
+     */
+    void deleteByIds(Integer[] ids);
 }
 
 

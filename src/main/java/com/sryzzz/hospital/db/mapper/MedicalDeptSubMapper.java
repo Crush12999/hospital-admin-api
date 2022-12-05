@@ -30,6 +30,13 @@ public interface MedicalDeptSubMapper extends BaseMapper<MedicalDeptSub> {
      * @return 总记录数
      */
     long searchCount(Map<String, Object> param);
+
+    /**
+     * 添加诊室记录
+     *
+     * @param entity 诊室实体类
+     */
+    void insertMedicalDeptSub(MedicalDeptSub entity);
 }
 
 

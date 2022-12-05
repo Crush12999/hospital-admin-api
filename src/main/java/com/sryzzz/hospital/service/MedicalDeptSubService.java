@@ -1,6 +1,7 @@
 package com.sryzzz.hospital.service;
 
 import com.sryzzz.hospital.common.PageUtils;
+import com.sryzzz.hospital.db.entity.MedicalDeptSub;
 
 import java.util.Map;
 
@@ -20,4 +21,11 @@ public interface MedicalDeptSubService {
      * @return 诊室分页记录
      */
     PageUtils searchByPage(Map<String, Object> param);
+
+    /**
+     * 添加诊室记录
+     *
+     * @param entity 诊室实体类
+     */
+    void insertMedicalDeptSub(MedicalDeptSub entity);
 }

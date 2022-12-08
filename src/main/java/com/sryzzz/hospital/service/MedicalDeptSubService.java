@@ -3,6 +3,7 @@ package com.sryzzz.hospital.service;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.MedicalDeptSub;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,4 +29,19 @@ public interface MedicalDeptSubService {
      * @param entity 诊室实体类
      */
     void insertMedicalDeptSub(MedicalDeptSub entity);
+
+    /**
+     * 查询简单的诊室信息
+     *
+     * @param id 诊室id
+     * @return 诊室信息
+     */
+    HashMap<String, Object> searchById(int id);
+
+    /**
+     * 修改诊室信息
+     *
+     * @param entity 诊室实体类
+     */
+    void updateMedicalDeptSub(MedicalDeptSub entity);
 }

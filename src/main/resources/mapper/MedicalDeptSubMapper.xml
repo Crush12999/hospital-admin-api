@@ -72,4 +72,23 @@
             NEXT VALUE FOR HOSPITAL.MEDICAL_DEPT_SUB_SEQUENCE, #{name}, ${deptId}, #{location}
         )
     </insert>
+
+    <!-- 查询诊室简略信息 -->
+    <select id="searchById" parameterType="int" resultType="HashMap">
+        SELECT "name",
+               "dept_id" AS "deptId",
+               "location"
+        FROM HOSPITAL.MEDICAL_DEPT_SUB
+        WHERE "id" = ${id}
+    </select>
+
+    <!-- 修改诊室信息 -->
+    <update id="updateMedicalDeptSub" parameterType="com.sryzzz.hospital.db.entity.MedicalDeptSub">
+        UPSERT INTO HOSPITAL.MEDICAL_DEPT_SUB(
+        "id", "name" ,"dept_id", "location"
+        )VALUES(
+            ${id}, #{name}, ${deptId}, #{location}
+        )
+    </update>
+
 </mapper>

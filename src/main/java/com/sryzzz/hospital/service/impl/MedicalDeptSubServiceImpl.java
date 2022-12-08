@@ -43,4 +43,15 @@ public class MedicalDeptSubServiceImpl extends ServiceImpl<MedicalDeptSubMapper,
     public void insertMedicalDeptSub(MedicalDeptSub entity) {
         baseMapper.insertMedicalDeptSub(entity);
     }
+
+    @Override
+    public HashMap<String, Object> searchById(int id) {
+        return baseMapper.searchById(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateMedicalDeptSub(MedicalDeptSub entity) {
+        baseMapper.updateMedicalDeptSub(entity);
+    }
 }

@@ -44,4 +44,11 @@ public interface MedicalDeptSubService {
      * @param entity 诊室实体类
      */
     void updateMedicalDeptSub(MedicalDeptSub entity);
+
+    /**
+     * 批量删除诊室
+     *
+     * @param ids 诊室id列表
+     */
+    void deleteByIds(Integer[] ids);
 }

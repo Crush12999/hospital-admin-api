@@ -6,10 +6,7 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.hutool.core.bean.BeanUtil;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.common.ResponseResult;
-import com.sryzzz.hospital.controller.form.InsertMedicalDeptSubForm;
-import com.sryzzz.hospital.controller.form.SearchMedicalDeptSubByIdForm;
-import com.sryzzz.hospital.controller.form.SearchMedicalDeptSubByPageForm;
-import com.sryzzz.hospital.controller.form.UpdateMedicalDeptSubForm;
+import com.sryzzz.hospital.controller.form.*;
 import com.sryzzz.hospital.db.entity.MedicalDeptSub;
 import com.sryzzz.hospital.service.MedicalDeptSubService;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +69,14 @@ public class MedicalDeptSubController {
     public ResponseResult update(@RequestBody @Valid UpdateMedicalDeptSubForm form) {
         MedicalDeptSub entity = BeanUtil.toBean(form, MedicalDeptSub.class);
         medicalDeptSubService.updateMedicalDeptSub(entity);
+        return ResponseResult.ok();
+    }
+
+    @PostMapping("/deleteByIds")
+    @SaCheckLogin
+    @SaCheckPermission(value = {"ROOT", "MEDICAL_DEPT_SUB:DELETE"}, mode = SaMode.OR)
+    public ResponseResult deleteByIds(@RequestBody @Valid DeleteMedicalDeptSubByIdsForm form) {
+        medicalDeptSubService.deleteByIds(form.getIds());
         return ResponseResult.ok();
     }
 }

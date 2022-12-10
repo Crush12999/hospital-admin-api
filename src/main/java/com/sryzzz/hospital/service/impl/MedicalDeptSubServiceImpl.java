@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sryzzz.hospital.common.PageUtils;
 import com.sryzzz.hospital.db.entity.MedicalDeptSub;
 import com.sryzzz.hospital.db.mapper.MedicalDeptSubMapper;
+import com.sryzzz.hospital.exception.HospitalException;
 import com.sryzzz.hospital.service.MedicalDeptSubService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,5 +54,16 @@ public class MedicalDeptSubServiceImpl extends ServiceImpl<MedicalDeptSubMapper,
     @Override
     public void updateMedicalDeptSub(MedicalDeptSub entity) {
         baseMapper.updateMedicalDeptSub(entity);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteByIds(Integer[] ids) {
+        long count = baseMapper.searchDoctorCount(ids);
+        if (count == 0) {
+            baseMapper.deleteByIds(ids);
+        } else {
+            throw new HospitalException("诊室存在关联医生，无法删除记录");
+        }
     }
 }
